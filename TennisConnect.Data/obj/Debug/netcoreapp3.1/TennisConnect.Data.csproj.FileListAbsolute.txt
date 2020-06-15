@@ -1,9 +1,0 @@
-C:\Projects\TennisConnect\TennisConnect.Data\bin\Debug\netcoreapp3.1\TennisConnect.Data.deps.json
-C:\Projects\TennisConnect\TennisConnect.Data\bin\Debug\netcoreapp3.1\TennisConnect.Data.dll
-C:\Projects\TennisConnect\TennisConnect.Data\bin\Debug\netcoreapp3.1\TennisConnect.Data.pdb
-C:\Projects\TennisConnect\TennisConnect.Data\obj\Debug\netcoreapp3.1\TennisConnect.Data.AssemblyInfoInputs.cache
-C:\Projects\TennisConnect\TennisConnect.Data\obj\Debug\netcoreapp3.1\TennisConnect.Data.AssemblyInfo.cs
-C:\Projects\TennisConnect\TennisConnect.Data\obj\Debug\netcoreapp3.1\TennisConnect.Data.dll
-C:\Projects\TennisConnect\TennisConnect.Data\obj\Debug\netcoreapp3.1\TennisConnect.Data.pdb
-C:\Projects\TennisConnect\TennisConnect.Data\obj\Debug\netcoreapp3.1\TennisConnect.Data.csprojAssemblyReference.cache
-C:\Projects\TennisConnect\TennisConnect.Data\obj\Debug\netcoreapp3.1\TennisConnect.Data.csproj.CoreCompileInputs.cache
