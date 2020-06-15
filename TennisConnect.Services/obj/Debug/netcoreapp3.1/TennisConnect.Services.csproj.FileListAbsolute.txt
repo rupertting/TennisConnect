@@ -1,0 +1,12 @@
+C:\Projects\TennisConnect\TennisConnect.Services\bin\Debug\netcoreapp3.1\TennisConnect.Services.deps.json
+C:\Projects\TennisConnect\TennisConnect.Services\bin\Debug\netcoreapp3.1\TennisConnect.Services.dll
+C:\Projects\TennisConnect\TennisConnect.Services\bin\Debug\netcoreapp3.1\TennisConnect.Services.pdb
+C:\Projects\TennisConnect\TennisConnect.Services\obj\Debug\netcoreapp3.1\TennisConnect.Services.AssemblyInfoInputs.cache
+C:\Projects\TennisConnect\TennisConnect.Services\obj\Debug\netcoreapp3.1\TennisConnect.Services.AssemblyInfo.cs
+C:\Projects\TennisConnect\TennisConnect.Services\obj\Debug\netcoreapp3.1\TennisConnect.Services.csproj.CoreCompileInputs.cache
+C:\Projects\TennisConnect\TennisConnect.Services\obj\Debug\netcoreapp3.1\TennisConnect.Services.dll
+C:\Projects\TennisConnect\TennisConnect.Services\obj\Debug\netcoreapp3.1\TennisConnect.Services.pdb
+C:\Projects\TennisConnect\TennisConnect.Services\bin\Debug\netcoreapp3.1\TennisConnect.Data.dll
+C:\Projects\TennisConnect\TennisConnect.Services\bin\Debug\netcoreapp3.1\TennisConnect.Data.pdb
+C:\Projects\TennisConnect\TennisConnect.Services\obj\Debug\netcoreapp3.1\TennisConnect.Services.csprojAssemblyReference.cache
+C:\Projects\TennisConnect\TennisConnect.Services\obj\Debug\netcoreapp3.1\TennisConnect.Services.csproj.CopyComplete
