@@ -28,7 +28,7 @@ namespace TennisConnect.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            services.AddCors();
             services.AddDbContext<TennisConnectDbContext>(options =>
             {
                 options.EnableDetailedErrors();
@@ -91,6 +91,12 @@ namespace TennisConnect.Web
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors(x => x
+                .WithOrigins(
+                    "http://localhost:8080"
+                )
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthentication();
             app.UseAuthorization();

@@ -14,7 +14,7 @@ namespace TennisConnect.Web.Controllers
         }
 
         [HttpGet("/api/profile/{id}")]
-        public ActionResult GetPlayerProfile(int id)
+        public ActionResult GetProfile(int id)
         {
             return Ok($"Profile {id}");
         }
