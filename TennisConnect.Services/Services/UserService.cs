@@ -14,14 +14,14 @@ namespace TennisConnect.Services
             _context = context;
         }
 
-        public User Authenticate(string username, string password)
+        public User Authenticate(string emailAddress, string password)
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(emailAddress) || string.IsNullOrEmpty(password))
                 return null;
 
-            var user = _context.Users.SingleOrDefault(x => x.UserName == username);
+            var user = _context.Users.SingleOrDefault(x => x.EmailAddress == emailAddress);
 
-            // check if username exists
+            // check if emailAddress exists
             if (user == null)
                 return null;
 
@@ -49,8 +49,11 @@ namespace TennisConnect.Services
             if (string.IsNullOrWhiteSpace(password))
                 throw new Exception("Password is required");
 
-            if (_context.Users.Any(x => x.UserName == user.UserName))
-                throw new Exception("UserName \"" + user.UserName + "\" is already taken");
+            if (!IsValidEmail(user.EmailAddress))
+                throw new Exception("Please enter a valid email address");
+
+            if (_context.Users.Any(x => x.EmailAddress == user.EmailAddress))
+                throw new Exception("Email address \"" + user.EmailAddress + "\" is already registered");
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
@@ -71,14 +74,18 @@ namespace TennisConnect.Services
             if (user == null)
                 throw new Exception("User not found");
 
-            // update username if it has changed
-            if (!string.IsNullOrWhiteSpace(userParam.UserName) && userParam.UserName != user.UserName)
+            // update emailAddress if it has changed
+            if (!string.IsNullOrWhiteSpace(userParam.EmailAddress) && userParam.EmailAddress != user.EmailAddress)
             {
-                // throw error if the new username is already taken
-                if (_context.Users.Any(x => x.UserName == userParam.UserName))
-                    throw new Exception("UserName " + userParam.UserName + " is already taken");
+                //throw error if an invalid emailAddress
+                if (!IsValidEmail(user.EmailAddress))
+                    throw new Exception("Please enter a valid email address");
 
-                user.UserName = userParam.UserName;
+                // throw error if the new emailAddress is already taken
+                if (_context.Users.Any(x => x.EmailAddress == userParam.EmailAddress))
+                    throw new Exception("UserName " + userParam.EmailAddress + " is already taken");
+
+                user.EmailAddress = userParam.EmailAddress;
             }
 
             // update user properties if provided
@@ -143,6 +150,19 @@ namespace TennisConnect.Services
             }
 
             return true;
+        }
+
+        private static bool IsValidEmail(string email)
+        {
+            try
+            {
+                var address = new System.Net.Mail.MailAddress(email);
+                return address.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

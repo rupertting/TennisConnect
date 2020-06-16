@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TennisConnect.Data;
@@ -10,13 +11,13 @@ using TennisConnect.Data.Models;
 namespace TennisConnect.Data.Migrations
 {
     [DbContext(typeof(TennisConnectDbContext))]
-    partial class TennisConnectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200616111847_Removed ContactDetails and replaced UserName with EmailAddress")]
+    partial class RemovedContactDetailsandreplacedUserNamewithEmailAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:Enum:friend_request_flag", "none,approved,rejected")
                 .HasAnnotation("Npgsql:Enum:rating", "beginner,improver,intermediate,experienced")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .HasAnnotation("ProductVersion", "3.1.5")
@@ -64,30 +65,6 @@ namespace TennisConnect.Data.Migrations
                     b.HasIndex("VenueId");
 
                     b.ToTable("Clubs");
-                });
-
-            modelBuilder.Entity("TennisConnect.Data.Models.Friend", b =>
-                {
-                    b.Property<int>("RequestedById")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RequestedToId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("BecameFriendsTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<FriendRequestFlag>("FriendRequestFlag")
-                        .HasColumnType("friend_request_flag");
-
-                    b.Property<DateTime?>("RequestTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("RequestedById", "RequestedToId");
-
-                    b.HasIndex("RequestedToId");
-
-                    b.ToTable("Friends");
                 });
 
             modelBuilder.Entity("TennisConnect.Data.Models.Profile", b =>
@@ -184,21 +161,6 @@ namespace TennisConnect.Data.Migrations
                     b.HasOne("TennisConnect.Data.Models.Venue", "Venue")
                         .WithMany()
                         .HasForeignKey("VenueId");
-                });
-
-            modelBuilder.Entity("TennisConnect.Data.Models.Friend", b =>
-                {
-                    b.HasOne("TennisConnect.Data.Models.Profile", "RequestedBy")
-                        .WithMany("SentFriendRequests")
-                        .HasForeignKey("RequestedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("TennisConnect.Data.Models.Profile", "RequestedTo")
-                        .WithMany("ReceivedFriendRequests")
-                        .HasForeignKey("RequestedToId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("TennisConnect.Data.Models.Profile", b =>
