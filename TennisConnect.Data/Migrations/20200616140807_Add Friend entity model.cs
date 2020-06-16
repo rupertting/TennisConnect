@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using TennisConnect.Data.Models;
 
 namespace TennisConnect.Data.Migrations
 {

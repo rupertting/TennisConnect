@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TennisConnect.Data.Models;
+using TennisConnect.Data;
 
 namespace TennisConnect.Services.Services
 {
@@ -8,7 +8,7 @@ namespace TennisConnect.Services.Services
     {
         public IEnumerable<Profile> GetAllProfiles();
         public Profile GetProfile(int profileId);
-        public Profile CreateProfile(int userId, DateTime dateOfBirth, int addressId, bool available, Rating rating, string bio, Club club);
+        public Profile CreateProfile(int userId, DateTime dateOfBirth, Address address, string rating, string bio, int clubId);
         public void DeleteProfile(int profileId); 
     }
 }

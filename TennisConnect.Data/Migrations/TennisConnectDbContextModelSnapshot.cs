@@ -2,10 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using TennisConnect.Data;
-using TennisConnect.Data.Models;
 
 namespace TennisConnect.Data.Migrations
 {

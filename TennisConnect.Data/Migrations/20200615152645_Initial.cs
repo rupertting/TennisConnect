@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using TennisConnect.Data.Models;
+using TennisConnect.Data;
 
 namespace TennisConnect.Data.Migrations
 {

@@ -1,8 +1,7 @@
-﻿namespace TennisConnect.Data
+﻿namespace TennisConnect.Web.Models
 {
-    public class Address
+    public class AddressModel
     {
-        public int Id { get; set; }
         public string NumberSupplement { get; set; }
         public string StreetName { get; set; }
         public string Town { get; set; }

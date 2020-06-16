@@ -1,4 +1,4 @@
-﻿namespace TennisConnect.Data.Models
+﻿namespace TennisConnect.Data
 {
     public class Club
     {

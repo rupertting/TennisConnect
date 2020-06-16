@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using TennisConnect.Data.Models;
 
 namespace TennisConnect.Data
 {

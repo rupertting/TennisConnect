@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TennisConnect.Data;
 using TennisConnect.Services;
+using TennisConnect.Services.Services;
 
 namespace TennisConnect.Web
 {
@@ -78,6 +79,8 @@ namespace TennisConnect.Web
             });
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IClubService, ClubService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

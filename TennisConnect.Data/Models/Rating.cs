@@ -1,5 +1,8 @@
-﻿namespace TennisConnect.Data.Models
+﻿using System.Text.Json.Serialization;
+
+namespace TennisConnect.Data
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Rating
     {
         Beginner,
