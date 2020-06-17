@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TennisConnect.Data;
 
 namespace TennisConnect.Services.Services
@@ -9,15 +11,17 @@ namespace TennisConnect.Services.Services
         private readonly TennisConnectDbContext _context;
         private IUserService _userService;
         private IClubService _clubService;
+        private IFriendService _friendService;
 
-        public ProfileService(TennisConnectDbContext context, IUserService userService, IClubService clubService)
+        public ProfileService(TennisConnectDbContext context, IUserService userService, IClubService clubService, IFriendService friendService)
         {
             _context = context;
             _userService = userService;
             _clubService = clubService;
+            _friendService = friendService;
         }
 
-        public Profile CreateProfile(int userId, DateTime dateOfBirth, Address address, string rating, string bio, int clubId)
+        public Profile Create(int userId, DateTime dateOfBirth, Address address, string rating, string bio, int clubId)
         {
             var user = _userService.GetById(userId);
             var club = _clubService.GetById(clubId);
@@ -41,19 +45,33 @@ namespace TennisConnect.Services.Services
             return profile;
         }
 
-        public void DeleteProfile(int profileId)
+        public void Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Profile> GetAllProfiles()
+        public IEnumerable<Profile> GetAll()
         {
-            throw new NotImplementedException();
+            var profiles = _context.Profiles
+                .Include(profile => profile.User)
+                .Include(profile => profile.Address)
+                .Include(profile => profile.Club)
+                .ThenInclude(club => club.Venue)
+                .ThenInclude(venue => venue.Address);
+
+            foreach (var profile in profiles)
+            {
+                profile.SentFriendRequests = _friendService.GetAllSentRequests(profile.Id).ToList();
+                profile.ReceivedFriendRequests = _friendService.GetAllReceivedRequests(profile.Id).ToList();
+            }
+
+            return profiles;
         }
 
-        public Profile GetProfile(int profileId)
+        public Profile GetById(int id)
         {
-            throw new NotImplementedException();
+            return GetAll()
+                .FirstOrDefault(profile => profile.Id == id);
         }
     }
 }

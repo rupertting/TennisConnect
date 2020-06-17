@@ -11,13 +11,13 @@ namespace TennisConnect.Web.Controllers
 {
     [Authorize]
     [ApiController]
-    public class GetProfileController : ControllerBase
+    public class ProfileController : ControllerBase
     {
-        private readonly ILogger<GetProfileController> _logger;
+        private readonly ILogger<ProfileController> _logger;
         private IMapper _mapper;
         private IProfileService _profileService;
 
-        public GetProfileController(ILogger<GetProfileController> logger, IMapper mapper, IProfileService profileService)
+        public ProfileController(ILogger<ProfileController> logger, IMapper mapper, IProfileService profileService)
         {
             _logger = logger;
             _mapper = mapper;
@@ -30,7 +30,7 @@ namespace TennisConnect.Web.Controllers
             var address = _mapper.Map<Address>(model.AddressModel);
             try
             {
-                _profileService.CreateProfile(model.UserId, model.DateOfBirth, address, model.Rating, model.Bio, model.ClubId);
+                _profileService.Create(model.UserId, model.DateOfBirth, address, model.Rating, model.Bio, model.ClubId);
                 return Ok();
             }
             catch(Exception ex)
@@ -42,7 +42,16 @@ namespace TennisConnect.Web.Controllers
         [HttpGet("/api/profile/{id}")]
         public ActionResult GetProfile(int id)
         {
-            return Ok($"Profile {id}");
+            try
+            {
+                var profile = _profileService.GetById(id);
+                return Ok(profile);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            
         }
     }
 }

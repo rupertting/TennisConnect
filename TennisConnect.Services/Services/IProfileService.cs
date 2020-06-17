@@ -6,9 +6,9 @@ namespace TennisConnect.Services.Services
 {
     public interface IProfileService
     {
-        public IEnumerable<Profile> GetAllProfiles();
-        public Profile GetProfile(int profileId);
-        public Profile CreateProfile(int userId, DateTime dateOfBirth, Address address, string rating, string bio, int clubId);
-        public void DeleteProfile(int profileId); 
+        public IEnumerable<Profile> GetAll();
+        public Profile GetById(int id);
+        public Profile Create(int userId, DateTime dateOfBirth, Address address, string rating, string bio, int clubId);
+        public void Delete(int id); 
     }
 }

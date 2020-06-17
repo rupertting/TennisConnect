@@ -79,8 +79,9 @@ namespace TennisConnect.Web
             });
 
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IProfileService, ProfileService>();
-            services.AddScoped<IClubService, ClubService>();
+            services.AddTransient<IProfileService, ProfileService>();
+            services.AddTransient<IClubService, ClubService>();
+            services.AddTransient<IFriendService, FriendService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
