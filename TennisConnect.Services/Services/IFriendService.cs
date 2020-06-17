@@ -5,7 +5,7 @@ namespace TennisConnect.Services.Services
 {
     public interface IFriendService
     {
-        void Request(int requestedById, int requestedToId);
+        void Request(Profile requestedBy, Profile requestedTo);
         Friend Accept(int requestedById, int requestedToId);
         Friend Reject(int requestedById, int requestedToId);
         IEnumerable<Friend> GetAll();

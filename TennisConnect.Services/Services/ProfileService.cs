@@ -11,14 +11,12 @@ namespace TennisConnect.Services.Services
         private readonly TennisConnectDbContext _context;
         private IUserService _userService;
         private IClubService _clubService;
-        private IFriendService _friendService;
 
-        public ProfileService(TennisConnectDbContext context, IUserService userService, IClubService clubService, IFriendService friendService)
+        public ProfileService(TennisConnectDbContext context, IUserService userService, IClubService clubService)
         {
             _context = context;
             _userService = userService;
             _clubService = clubService;
-            _friendService = friendService;
         }
 
         public Profile Create(int userId, DateTime dateOfBirth, Address address, string rating, string bio, int clubId)
@@ -52,20 +50,12 @@ namespace TennisConnect.Services.Services
 
         public IEnumerable<Profile> GetAll()
         {
-            var profiles = _context.Profiles
+           return _context.Profiles
                 .Include(profile => profile.User)
                 .Include(profile => profile.Address)
                 .Include(profile => profile.Club)
                 .ThenInclude(club => club.Venue)
                 .ThenInclude(venue => venue.Address);
-
-            foreach (var profile in profiles)
-            {
-                profile.SentFriendRequests = _friendService.GetAllSentRequests(profile.Id).ToList();
-                profile.ReceivedFriendRequests = _friendService.GetAllReceivedRequests(profile.Id).ToList();
-            }
-
-            return profiles;
         }
 
         public Profile GetById(int id)

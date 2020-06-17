@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using TennisConnect.Data;
 using TennisConnect.Services.Services;
 using TennisConnect.Web.Models;
@@ -16,12 +18,14 @@ namespace TennisConnect.Web.Controllers
         private readonly ILogger<ProfileController> _logger;
         private IMapper _mapper;
         private IProfileService _profileService;
+        private IFriendService _friendService;
 
-        public ProfileController(ILogger<ProfileController> logger, IMapper mapper, IProfileService profileService)
+        public ProfileController(ILogger<ProfileController> logger, IMapper mapper, IProfileService profileService, IFriendService friendService)
         {
             _logger = logger;
             _mapper = mapper;
             _profileService = profileService;
+            _friendService = friendService;
         }
 
         [HttpPost("/api/createprofile")]
@@ -45,6 +49,11 @@ namespace TennisConnect.Web.Controllers
             try
             {
                 var profile = _profileService.GetById(id);
+               
+                profile.SentFriendRequests = _friendService.GetAllSentRequests(profile.Id).ToList();
+                profile.ReceivedFriendRequests = _friendService.GetAllReceivedRequests(profile.Id).ToList();
+
+                var model = _mapper.Map<CompletedProfileModel>(profile);
                 return Ok(profile);
             }
             catch(Exception ex)

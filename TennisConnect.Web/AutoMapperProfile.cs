@@ -11,6 +11,9 @@ namespace TennisConnect.Web
             CreateMap<RegisterModel, User>();
             CreateMap<UpdateModel, User>();
             CreateMap<AddressModel, Address>();
+            CreateMap<Friend, FriendModel>();
+            CreateMap<Profile, CompletedProfileModel>()
+                .ForMember(dest => dest.UserModel, opt => opt.MapFrom(src => src.User));   
         }
     }
 }

@@ -78,7 +78,7 @@ namespace TennisConnect.Web
                 };
             });
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IProfileService, ProfileService>();
             services.AddTransient<IClubService, ClubService>();
             services.AddTransient<IFriendService, FriendService>();

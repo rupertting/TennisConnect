@@ -8,12 +8,10 @@ namespace TennisConnect.Services.Services
     public class FriendService : IFriendService
     {
         private readonly TennisConnectDbContext _context;
-        private ProfileService _profileService;
 
-        public FriendService(TennisConnectDbContext context, ProfileService profileService)
+        public FriendService(TennisConnectDbContext context)
         {
             _context = context;
-            _profileService = profileService;
         }
 
         public Friend Accept(int requestedById, int requestedToId)
@@ -39,12 +37,18 @@ namespace TennisConnect.Services.Services
 
         public IEnumerable<Friend> GetAllReceivedRequests(int requestedToId)
         {
+            var result = GetAll().Where(friend => friend.RequestedToId == requestedToId
+                && friend.FriendRequestFlag == FriendRequestFlag.None);
+
             return GetAll().Where(friend => friend.RequestedToId == requestedToId
                 && friend.FriendRequestFlag == FriendRequestFlag.None);
         }
 
         public IEnumerable<Friend> GetAllSentRequests(int requestedById)
         {
+            var result = GetAll().Where(friend => friend.RequestedById == requestedById
+                && friend.FriendRequestFlag == FriendRequestFlag.None);
+
             return GetAll().Where(friend => friend.RequestedById == requestedById
                 && friend.FriendRequestFlag == FriendRequestFlag.None);
         }
@@ -70,11 +74,8 @@ namespace TennisConnect.Services.Services
             return friend;
         }
 
-        public void Request(int requestedById, int requestedToId)
+        public void Request(Profile requestedBy, Profile requestedTo)
         {
-            var requestedBy = _profileService.GetById(requestedById);
-            var requestedTo = _profileService.GetById(requestedToId);
-
             var friend = new Friend
             {
                 RequestedBy = requestedBy,

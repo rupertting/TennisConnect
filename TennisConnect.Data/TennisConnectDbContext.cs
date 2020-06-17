@@ -23,6 +23,10 @@ namespace TennisConnect.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<User>()
+                .HasIndex(a => new { a.EmailAddress })
+                .IsUnique();
+                
             builder.Entity<Friend>()
                 .HasKey(a => new { a.RequestedById, a.RequestedToId });
 
