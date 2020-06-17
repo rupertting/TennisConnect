@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using TennisConnect.Services;
 using TennisConnect.Web.Models;
 using TennisConnect.Data;
+using System.Text.RegularExpressions;
 
 namespace TennisConnect.Web.Controllers
 {

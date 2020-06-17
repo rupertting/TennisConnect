@@ -1,4 +1,6 @@
-﻿namespace TennisConnect.Data
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TennisConnect.Data
 {
     public class Address
     {
@@ -7,5 +9,7 @@
         public string StreetName { get; set; }
         public string Town { get; set; }
         public string PostCode { get; set; }
+        [Required]
+        public string UniqueIdentifier { get; set; }
     }
 }

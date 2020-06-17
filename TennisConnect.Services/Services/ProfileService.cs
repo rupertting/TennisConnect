@@ -37,9 +37,19 @@ namespace TennisConnect.Services.Services
                 Bio = bio
             };
 
-            _context.Profiles.Add(profile);
-            _context.SaveChanges();
-
+            try
+            {
+                _context.Profiles.Add(profile);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException.Message == "duplicate key value violates unique constraint \"IX_Addresses_UniqueIdentifier\"")
+                {
+                    int a = 1;
+                }
+            }
+            
             return profile;
         }
 

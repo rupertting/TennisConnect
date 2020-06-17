@@ -26,6 +26,10 @@ namespace TennisConnect.Data
             builder.Entity<User>()
                 .HasIndex(a => new { a.EmailAddress })
                 .IsUnique();
+
+            builder.Entity<Address>()
+                .HasIndex(a => new { a.UniqueIdentifier })
+                .IsUnique();
                 
             builder.Entity<Friend>()
                 .HasKey(a => new { a.RequestedById, a.RequestedToId });
