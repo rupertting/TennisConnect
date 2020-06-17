@@ -27,9 +27,7 @@ namespace TennisConnect.Web.Controllers
         [HttpPost("/api/createprofile")]
         public IActionResult CreateProfile([FromBody] ProfileModel model)
         {
-            int a = 1;
             var address = _mapper.Map<Address>(model.AddressModel);
-            
             try
             {
                 _profileService.CreateProfile(model.UserId, model.DateOfBirth, address, model.Rating, model.Bio, model.ClubId);

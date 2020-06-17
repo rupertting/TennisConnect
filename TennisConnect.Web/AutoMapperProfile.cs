@@ -10,7 +10,6 @@ namespace TennisConnect.Web
             CreateMap<User, UserModel>();
             CreateMap<RegisterModel, User>();
             CreateMap<UpdateModel, User>();
-            CreateMap<ClubModel, Club>();
             CreateMap<AddressModel, Address>();
         }
     }
