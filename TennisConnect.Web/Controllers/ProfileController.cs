@@ -32,15 +32,7 @@ namespace TennisConnect.Web.Controllers
         public IActionResult CreateProfile([FromBody] ProfileModel model)
         {
             var address = _mapper.Map<Address>(model.AddressModel);
-            address.UniqueIdentifier = string.Join(string.Empty, new string[] 
-                                                   { 
-                                                       address.NumberSupplement, 
-                                                       address.StreetName, 
-                                                       address.Town, 
-                                                       address.PostCode 
-                                                   })
-                                            .ToLowerInvariant();
-
+      
             try
             {
                 _profileService.Create(model.UserId, model.DateOfBirth, address, model.Rating, model.Bio, model.ClubId);

@@ -9,6 +9,14 @@
     <Compile Remove="Migrations\20200615195845_Update Profile model.Designer.cs" />
     <Compile Remove="Migrations\20200616140538_Add Friend entity model.cs" />
     <Compile Remove="Migrations\20200616140538_Add Friend entity model.Designer.cs" />
+    <Compile Remove="Migrations\20200618131133_Custom setter for UniqueIdentifier in Address entity.cs" />
+    <Compile Remove="Migrations\20200618131133_Custom setter for UniqueIdentifier in Address entity.Designer.cs" />
+    <Compile Remove="Migrations\20200618132138_Custom setter for UniqueIdentifier in Address entity.cs" />
+    <Compile Remove="Migrations\20200618132138_Custom setter for UniqueIdentifier in Address entity.Designer.cs" />
+    <Compile Remove="Migrations\20200618132702_Add UniqueIdentifier in Address entity.cs" />
+    <Compile Remove="Migrations\20200618132702_Add UniqueIdentifier in Address entity.Designer.cs" />
+    <Compile Remove="Migrations\20200618134421_Custom setter on UniqueIdentifier on Address entity.cs" />
+    <Compile Remove="Migrations\20200618134421_Custom setter on UniqueIdentifier on Address entity.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

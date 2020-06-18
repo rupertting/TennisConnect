@@ -30,7 +30,7 @@ namespace TennisConnect.Data
             builder.Entity<Address>()
                 .HasIndex(a => new { a.UniqueIdentifier })
                 .IsUnique();
-                
+
             builder.Entity<Friend>()
                 .HasKey(a => new { a.RequestedById, a.RequestedToId });
 

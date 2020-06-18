@@ -16,11 +16,6 @@ namespace TennisConnect.Services.Services
 
         public Address Create(Address address)
         {
-            if (DuplicateCheck(address))
-            {
-                return address;
-            }
-
             _context.Addresses.Add(address);
             _context.SaveChanges();
 
@@ -30,21 +25,6 @@ namespace TennisConnect.Services.Services
         public void Delete(int id)
         {
             throw new NotImplementedException();
-        }
-
-        public bool DuplicateCheck(Address address)
-        {
-            var addresses = GetAll();
-
-            foreach (var ad in addresses)
-            {
-                if (ad.NumberSupplement == address.NumberSupplement && ad.StreetName == address.StreetName && ad.PostCode == address.PostCode)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         public IEnumerable<Address> GetAll()

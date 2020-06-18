@@ -82,6 +82,7 @@ namespace TennisConnect.Web
             services.AddTransient<IProfileService, ProfileService>();
             services.AddTransient<IClubService, ClubService>();
             services.AddTransient<IFriendService, FriendService>();
+            services.AddTransient<IAddressService, AddressService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

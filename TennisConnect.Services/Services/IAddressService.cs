@@ -12,6 +12,5 @@ namespace TennisConnect.Services.Services
         Address Update(int id);
         void Delete(int id);
         Address Create(Address address);
-        bool DuplicateCheck(Address address);
     }
 }

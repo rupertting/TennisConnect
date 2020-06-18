@@ -9,14 +9,16 @@ namespace TennisConnect.Services.Services
     public class ProfileService : IProfileService
     {
         private readonly TennisConnectDbContext _context;
-        private IUserService _userService;
-        private IClubService _clubService;
+        private readonly IUserService _userService;
+        private readonly IClubService _clubService;
+        private readonly IAddressService _addressService;
 
-        public ProfileService(TennisConnectDbContext context, IUserService userService, IClubService clubService)
+        public ProfileService(TennisConnectDbContext context, IUserService userService, IClubService clubService, IAddressService addressService)
         {
             _context = context;
             _userService = userService;
             _clubService = clubService;
+            _addressService = addressService;
         }
 
         public Profile Create(int userId, DateTime dateOfBirth, Address address, string rating, string bio, int clubId)
@@ -36,6 +38,7 @@ namespace TennisConnect.Services.Services
                 Available = true,
                 Bio = bio
             };
+            var isDuplicatedAddress = false;
 
             try
             {
@@ -44,10 +47,23 @@ namespace TennisConnect.Services.Services
             }
             catch (Exception ex)
             {
-                if (ex.InnerException.Message == "duplicate key value violates unique constraint \"IX_Addresses_UniqueIdentifier\"")
+                isDuplicatedAddress = ex.InnerException.Message switch
                 {
-                    int a = 1;
-                }
+                    "duplicate key value violates unique constraint \"IX_Addresses_UniqueIdentifier\"" => true,
+                    _ => throw new Exception(ex.Message),
+                };
+            }
+
+            if (isDuplicatedAddress)
+            {
+                var duplicatedAddress = _addressService.GetAll()
+                    .FirstOrDefault(ad => ad.UniqueIdentifier == profile.Address.UniqueIdentifier);
+                profile.Address = null;
+
+                _context.Profiles.Add(profile);
+                profile.Address = duplicatedAddress;
+
+                _context.SaveChanges();
             }
             
             return profile;
@@ -72,6 +88,46 @@ namespace TennisConnect.Services.Services
         {
             return GetAll()
                 .FirstOrDefault(profile => profile.Id == id);
+        }
+
+        public Profile Update(Profile updatedProfile)
+        {
+            var profile = GetById(updatedProfile.Id);
+
+            if(updatedProfile.DateOfBirth != null)
+            {
+                profile.DateOfBirth = updatedProfile.DateOfBirth;
+            }
+
+            if(updatedProfile.Address != null)
+            {
+                profile.Address = updatedProfile.Address;
+            }
+            
+            if(updatedProfile.Rating != profile.Rating)
+            {
+                profile.Rating = updatedProfile.Rating;
+            }
+            
+            if(updatedProfile.Club != null)
+            {
+                profile.Club = updatedProfile.Club;
+            }
+            
+            if(updatedProfile.Available != profile.Available)
+            {
+                profile.Available = updatedProfile.Available;
+            }
+            
+            if(updatedProfile.Bio != profile.Bio)
+            {
+                profile.Bio = updatedProfile.Bio;
+            }
+           
+            _context.Profiles.Update(profile);
+            _context.SaveChanges();
+
+            return profile;
         }
     }
 }
