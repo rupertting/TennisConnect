@@ -38,34 +38,20 @@ namespace TennisConnect.Services.Services
                 Available = true,
                 Bio = bio
             };
-            var isDuplicatedAddress = false;
+            var duplicatedAddress = _addressService.GetByUniqueIdentifier(profile.Address.UniqueIdentifier);
 
-            try
+            if (duplicatedAddress == null)
             {
                 _context.Profiles.Add(profile);
-                _context.SaveChanges();
             }
-            catch (Exception ex)
+            else
             {
-                isDuplicatedAddress = ex.InnerException.Message switch
-                {
-                    "duplicate key value violates unique constraint \"IX_Addresses_UniqueIdentifier\"" => true,
-                    _ => throw new Exception(ex.Message),
-                };
-            }
-
-            if (isDuplicatedAddress)
-            {
-                var duplicatedAddress = _addressService.GetAll()
-                    .FirstOrDefault(ad => ad.UniqueIdentifier == profile.Address.UniqueIdentifier);
                 profile.Address = null;
-
                 _context.Profiles.Add(profile);
                 profile.Address = duplicatedAddress;
-
-                _context.SaveChanges();
             }
-            
+
+            _context.SaveChanges();
             return profile;
         }
 

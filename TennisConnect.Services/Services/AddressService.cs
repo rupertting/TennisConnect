@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using TennisConnect.Data;
 
@@ -35,6 +37,11 @@ namespace TennisConnect.Services.Services
         public Address GetById(int id)
         {
             return _context.Addresses.Find(id);
+        }
+
+        public Address GetByUniqueIdentifier(string addressUniqueIdentifier)
+        {
+            return GetAll().FirstOrDefault(ad => ad.UniqueIdentifier == addressUniqueIdentifier);
         }
 
         public Address Update(int id)
