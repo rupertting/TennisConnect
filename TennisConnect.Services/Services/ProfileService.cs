@@ -62,12 +62,12 @@ namespace TennisConnect.Services.Services
 
         public IEnumerable<Profile> GetAll()
         {
-           return _context.Profiles
-                .Include(profile => profile.User)
-                .Include(profile => profile.Address)
-                .Include(profile => profile.Club)
-                .ThenInclude(club => club.Venue)
-                .ThenInclude(venue => venue.Address);
+            return _context.Profiles
+                 .Include(profile => profile.User)
+                 .Include(profile => profile.Address)
+                 .Include(profile => profile.Club)
+                 .ThenInclude(club => club.Venue)
+                 .ThenInclude(venue => venue.Address);
         }
 
         public Profile GetById(int id)

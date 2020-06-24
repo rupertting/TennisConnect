@@ -93,8 +93,6 @@ namespace TennisConnect.Web
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
             app.UseCors(x => x
                 .WithOrigins(

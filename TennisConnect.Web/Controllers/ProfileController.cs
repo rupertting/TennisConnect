@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TennisConnect.Data;
 using TennisConnect.Services.Services;
@@ -11,7 +12,6 @@ using TennisConnect.Web.Models;
 
 namespace TennisConnect.Web.Controllers
 {
-    [Authorize]
     [ApiController]
     public class ProfileController : ControllerBase
     {
@@ -55,13 +55,28 @@ namespace TennisConnect.Web.Controllers
                 profile.ReceivedFriendRequests = _friendService.GetAllReceivedRequests(profile.Id).ToList();
 
                 var model = _mapper.Map<CompletedProfileModel>(profile);
-                return Ok(profile);
+                return Ok(model);
             }
             catch(Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
+            }   
+        }
+
+        [HttpGet("/api/profiles")]
+        public ActionResult GetProfiles()
+        {
+            try
+            {
+                var profiles = _profileService.GetAll();
+                var model = _mapper.Map<IList<CompletedProfileModel>>(profiles);
+
+                return Ok(model);
             }
-            
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

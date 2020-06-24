@@ -6,6 +6,7 @@ namespace TennisConnect.Web.Models
 {
     public class CompletedProfileModel
     {
+        public int Id { get; set; }
         public UserModel UserModel { get; set; }
         public DateTime DateOfBirth { get; set; }
         public Address Address { get; set; }
