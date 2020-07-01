@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/tc-logo.png" />
-    <HelloWorld msg="Welcome to TennisConnect!" />
   </div>
 </template>
 

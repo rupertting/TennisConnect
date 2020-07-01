@@ -1,6 +1,14 @@
 <template>
   <div class="profile-wrapper">
-    {{ profile.userModel.firstName }} {{ profile.userModel.lastName }}
+    <div>
+      <strong>Name</strong>: {{ profile.userModel.firstName }} {{ profile.userModel.lastName }} 
+    </div>
+    <div v-if="profile.club !== null">
+      <strong>Club</strong>: {{ profile.club.name }}
+    </div>
+    <div v-if="profile.address !== null" >
+      <strong>Location</strong>: {{ profile.address.town }}
+    </div>
   </div>
 </template>
 
@@ -9,10 +17,10 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 import IProfile from "@types/Profile";
 
 @Component({
-  name: "Profile",
+  name: "ProfileListItem",
   components: {},
 })
-export default class Profile extends Vue {
+export default class ProfileListItem extends Vue {
   @Prop({ required: true })
   profile!: IProfile;
 }
