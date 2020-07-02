@@ -16,6 +16,15 @@ const routes: Array<RouteConfig> = [
     name: "Profiles",
     component: Profiles,
   },
+  {
+    path: "/profiles/:id",
+    name: "Profile",
+    component: () =>
+    import(
+      /* webpackChunkName: "Profile" */ "../views/Profile"
+    ),
+    props: true
+  }
 ];
 
 const router = new VueRouter({

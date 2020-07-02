@@ -1,18 +1,24 @@
 <template>
   <div class="profiles-container">
     <h1>Profiles</h1>
-    <!-- <h2> {{ profiles.items.length }}</h2> -->
-
     <div v-if="profiles.items">
-      <!-- <div v-for="profile in profiles.items" :key="profile.id">
-        {{ profile.userModel.firstName }} 
-      </div> -->
-      <ProfileListItem
-        v-for="profile in profiles.items"
-        :key="profile.id"
-        :profile="profile"
-      >
-      </ProfileListItem>
+      <div v-for="profile in profiles.items" :key="profile.id">
+       <router-link :to="{ name: 'Profile',
+                           params: { id: profile.id } 
+                      }">
+         <div class="profile-wrapper">
+          <div>
+            <strong>Name</strong>: {{ profile.userModel.firstName }} {{ profile.userModel.lastName }} 
+          </div>
+          <div v-if="profile.club !== null">
+            <strong>Club</strong>: {{ profile.club.name }}
+          </div>
+          <div v-if="profile.address !== null" >
+            <strong>Location</strong>: {{ profile.address.town }}
+          </div>
+        </div>
+       </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -20,17 +26,13 @@
 <script lang="ts">
 import {mapState, mapActions} from 'vuex';
 import { Component, Vue} from "vue-property-decorator";
-import ProfileListItem from "@/components/ProfileListItem.vue";
-import IProfile from "@/types/profile";
 
 export default{
   name: 'Profiles',
-  components:{
-    ProfileListItem
-  },
+  components:{},
   computed: {
     ...mapState({
-      profiles: state => state.profiles.all,
+      profiles: state => state.profiles.all
     })
   },
   created(){
@@ -42,29 +44,13 @@ export default{
     })
   }
 }
-
-
-
-// import { Component, Vue } from "vue-property-decorator";
-// import IProfile from "@/types/profile";
-// import ProfileService from "../services/profile-service";
-// import Profile from "@/components/Profile.vue";
-
-// const profileService = new ProfileService();
-
-
-// export default class Profiles extends Vue {
-//   allProfiles: IProfile[] = [];
-
-//   get profileCount() {
-//     return this.allProfiles.length;
-//   }
-
-//   created() {
-//     profileService
-//       .getAll()
-//       .then((res) => (this.allProfiles = res))
-//       .catch((err) => console.error(err));
-//   }
-// }
 </script>
+
+<style scoped lang="scss">
+  .profile-wrapper {
+    margin: 0.8rem;
+    padding: 0.4rem;
+    border: 1px solid #555;
+    border-radius: 1rem;
+  }
+</style>

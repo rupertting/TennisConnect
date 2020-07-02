@@ -31,7 +31,7 @@ const mutations = {
   getAllRequest(state: { all: { loading: boolean; }; }) {
     state.all = { loading: true };
   },
-  getAllSuccess(state: { all: { items: IProfile[]; }; }, profiles: IProfile[]) {
+  getAllSuccess(state: { all: { items: any; }; }, profiles: any) {
     state.all = { items: profiles };
   },
   getAllFailure(state: { all: { error: any; }; }, error: any) {
@@ -64,9 +64,18 @@ const mutations = {
   },
 };
 
+const getters = {
+  getById: (state) => (id: number) => {
+    return state.all.items.find(
+      (profile) => profile.id === id
+    )
+  }
+}
+
 export const profiles = {
   namespaced: true,
   state,
   actions,
   mutations,
+  getters
 };
