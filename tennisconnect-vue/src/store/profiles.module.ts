@@ -3,6 +3,7 @@ import IProfile from "@/types/profile";
 
 const state = {
   all: {},
+  current: {},
 };
 
 const profileService = new ProfileService();
@@ -14,6 +15,18 @@ const actions = {
     profileService.getAll().then(
       (profiles: IProfile[]) => commit("getAllSuccess", profiles),
       (error) => commit("getAllFailure", error)
+    );
+  },
+
+  getSingle({ commit }: any, id: Number) {
+    commit("getSingleRequest");
+
+    profileService.getByUserId(id).then(
+      (profile: IProfile) => {
+        commit("getSingleSuccess", profile);
+        console.log(profile);
+      },
+      (error) => commit("getSingleFailure", error)
     );
   },
 
@@ -32,11 +45,20 @@ const mutations = {
   getAllRequest(state: { all: { loading: boolean } }) {
     state.all = { loading: true };
   },
+  getSingleRequest(state: { current: { loading: boolean } }) {
+    state.current = { loading: true };
+  },
   getAllSuccess(state: { all: { items: any } }, profiles: any) {
     state.all = { items: profiles };
   },
+  getSingleSuccess(state: { current: { items: any } }, profile: IProfile) {
+    state.current = { items: profile };
+  },
   getAllFailure(state: { all: { error: any } }, error: any) {
     state.all = { error };
+  },
+  getSingleFailure(state: { current: { error: any } }, error: any) {
+    state.current = { error };
   },
   deleteRequest(state: { all: { items: IProfile[] } }, id: number) {
     // add 'deleting:true' property to user being deleted

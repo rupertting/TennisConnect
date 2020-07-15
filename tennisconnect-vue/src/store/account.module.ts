@@ -15,8 +15,9 @@ const actions = {
     userService.login(emailaddress, password).then(
       (user) => {
         commit("loginSuccess", user);
-        console.log(user);
-        console.log(user.id);
+        // console.log(user);
+        // console.log(user.id);
+        //router.push({ name: "Profiles" });
         router.push({ name: "MyProfile", params: { userId: user.id } });
       },
       (error) => {

@@ -1,9 +1,6 @@
 <template>
   <h1>
-    <!-- {{ profiles }} -->
-    {{ getProfile(this.userId) }}
-    <!-- Hello {{ getProfile(this.profiles, this.userId).userModel.firstName }}
-    {{ getProfile(this.profiles, this.userId).userModel.lastName }} -->
+    {{ current }}
   </h1>
 </router-view>
 </template>
@@ -13,7 +10,9 @@ import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
   data() {
-    return {};
+    return {
+      loading: false,
+    };
   },
   props: {
     userId: {
@@ -23,19 +22,25 @@ export default {
   },
   computed: {
     ...mapState({
-      profiles: (state) => state.profiles.all,
+      current: (state) => state.profiles.current,
     }),
-    ...mapGetters("profiles", {
-      getProfile: "getByUserId",
-    }),
+    ...mapGetters("profiles", 
+      ["getByUserId"]
+    ),
   },
   created() {
-     this.getAllProfiles();
+     this.getProfile();
   },
   methods: {
-    ...mapActions("profiles", {
-      getAllProfiles: "getAll",
-    }),
+    ...mapActions("profiles", ["getSingle"]
+    ),
+    getProfile (){
+      this.loading = true
+
+      this.getSingle(this.$route.params.userId).then(
+        this.loading = false
+      )
+    }
   },
 };
 </script>

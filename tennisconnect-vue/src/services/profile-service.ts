@@ -16,7 +16,7 @@ export default class ProfileService {
     return result.data;
   }
 
-  public async getByUserId(userId: number): Promise<IProfile> {
+  public async getByUserId(userId: Number): Promise<IProfile> {
     const requestOptions = {
       method: "GET",
       headers: authHeader(),
