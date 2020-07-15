@@ -11,5 +11,6 @@ namespace TennisConnect.Services.Services
         public Profile Create(int userId, DateTime dateOfBirth, Address address, string rating, string bio, int clubId);
         public void Delete(int id);
         public Profile Update(Profile updatedProfile);
+        public Profile GetByUserId(int userId);
     }
 }

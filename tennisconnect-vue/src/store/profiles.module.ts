@@ -22,34 +22,38 @@ const actions = {
 
     profileService.delete(id).then(
       (profile: IProfile) => commit("deleteSuccess", id),
-      (error: { toString: () => any; }) => commit("deleteFailure", { id, error: error.toString() })
+      (error: { toString: () => any }) =>
+        commit("deleteFailure", { id, error: error.toString() })
     );
   },
 };
 
 const mutations = {
-  getAllRequest(state: { all: { loading: boolean; }; }) {
+  getAllRequest(state: { all: { loading: boolean } }) {
     state.all = { loading: true };
   },
-  getAllSuccess(state: { all: { items: any; }; }, profiles: any) {
+  getAllSuccess(state: { all: { items: any } }, profiles: any) {
     state.all = { items: profiles };
   },
-  getAllFailure(state: { all: { error: any; }; }, error: any) {
+  getAllFailure(state: { all: { error: any } }, error: any) {
     state.all = { error };
   },
-  deleteRequest(state: { all: { items: IProfile[]; }; }, id: number) {
+  deleteRequest(state: { all: { items: IProfile[] } }, id: number) {
     // add 'deleting:true' property to user being deleted
     state.all.items = state.all.items.map((profile: IProfile) =>
       profile.id === id ? { ...profile, deleting: true } : profile
     );
   },
-  deleteSuccess(state: { all: { items: any[]; }; }, id: number) {
+  deleteSuccess(state: { all: { items: any[] } }, id: number) {
     // remove deleted user from state
     state.all.items = state.all.items.filter(
       (profile: IProfile) => profile.id !== id
     );
   },
-  deleteFailure(state: { all: { items: any; }; items: IProfile[]; }, { id, error }: any) {
+  deleteFailure(
+    state: { all: { items: any }; items: IProfile[] },
+    { id, error }: any
+  ) {
     // remove 'deleting:true' property and add 'deleteError:[error]' property to user
     state.all.items = state.items.map((profile: IProfile) => {
       if (profile.id === id) {
@@ -65,17 +69,18 @@ const mutations = {
 };
 
 const getters = {
-  getById: (state) => (id: number) => {
-    return state.all.items.find(
-      (profile) => profile.id === id
-    )
-  }
-}
+  getById: (state: { all: { items: any[] } }) => (id: number) => {
+    return state.all.items.find((profile) => profile.id === id);
+  },
+  getByUserId: (state: { all: { items: any[] } }) => (userId: number) => {
+    return state.all.items.find((profile) => profile.userModel.id === userId);
+  },
+};
 
 export const profiles = {
   namespaced: true,
   state,
   actions,
   mutations,
-  getters
+  getters,
 };

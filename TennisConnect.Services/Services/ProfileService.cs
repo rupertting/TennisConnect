@@ -76,6 +76,12 @@ namespace TennisConnect.Services.Services
                 .FirstOrDefault(profile => profile.Id == id);
         }
 
+        public Profile GetByUserId(int userId)
+        {
+            return GetAll()
+                .FirstOrDefault(profile => profile.User.Id == userId);
+        }
+
         public Profile Update(Profile updatedProfile)
         {
             var profile = GetById(updatedProfile.Id);

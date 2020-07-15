@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { mapState, mapActions } from "vuex";
 import { Component, Vue } from "vue-property-decorator";
 import ProfileListItem from "@/components/ProfileListItem.vue";

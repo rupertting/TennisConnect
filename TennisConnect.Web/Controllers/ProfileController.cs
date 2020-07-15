@@ -12,6 +12,7 @@ using TennisConnect.Web.Models;
 
 namespace TennisConnect.Web.Controllers
 {
+    [Authorize]
     [ApiController]
     public class ProfileController : ControllerBase
     {
@@ -61,6 +62,25 @@ namespace TennisConnect.Web.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }   
+        }
+
+        [HttpGet("/api/profile/userId={userId}")]
+        public ActionResult GetProfileByUserId(int userId)
+        {
+            try
+            {
+                var profile = _profileService.GetByUserId(userId);
+
+                profile.SentFriendRequests = _friendService.GetAllSentRequests(profile.Id).ToList();
+                profile.ReceivedFriendRequests = _friendService.GetAllReceivedRequests(profile.Id).ToList();
+
+                var model = _mapper.Map<CompletedProfileModel>(profile);
+                return Ok(model);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpGet("/api/profiles")]
