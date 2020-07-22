@@ -3,7 +3,7 @@ import IProfile from "@/types/profile";
 
 const state = {
   all: {},
-  current: {},
+  single: {},
 };
 
 const profileService = new ProfileService();
@@ -51,14 +51,14 @@ const mutations = {
   getAllSuccess(state: { all: { items: any } }, profiles: any) {
     state.all = { items: profiles };
   },
-  getSingleSuccess(state: { current: { items: any } }, profile: IProfile) {
-    state.current = { items: profile };
+  getSingleSuccess(state: { single: { profile: any } }, profile: any) {
+    state.single = { profile };
   },
   getAllFailure(state: { all: { error: any } }, error: any) {
     state.all = { error };
   },
-  getSingleFailure(state: { current: { error: any } }, error: any) {
-    state.current = { error };
+  getSingleFailure(state: { single: { error: any } }, error: any) {
+    state.single = { error };
   },
   deleteRequest(state: { all: { items: IProfile[] } }, id: number) {
     // add 'deleting:true' property to user being deleted
