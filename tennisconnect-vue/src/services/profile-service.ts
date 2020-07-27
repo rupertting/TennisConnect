@@ -30,6 +30,20 @@ export default class ProfileService {
     return result.data;
   }
 
+  public async getByProfileId(profileId: Number): Promise<IProfile> {
+    const requestOptions = {
+      method: "GET",
+      headers: authHeader(),
+    };
+
+    let result = await axios.get(
+      `${this.API_URL}/profile/profileId=${profileId}`,
+      requestOptions
+    );
+    console.log(result.data);
+    return result.data;
+  }
+
   public async delete(id: any): Promise<IProfile> {
     throw new Error("Method not implemented.");
   }

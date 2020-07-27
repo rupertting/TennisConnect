@@ -10,7 +10,7 @@
        <br/>
        <span> <b>Email</b>: {{ emailAddress }}</span>
        <br/>
-       <span>
+       <span v-if="fullAddress !== null">
          <b>Address</b>: 
         {{ fullAddress }}
        </span>
@@ -37,8 +37,9 @@
         <span v-if="sentFriendRequests.length > 0">
             <ul>
               <li v-for="request in sentFriendRequests" :key="request.requestedToId">
-                {{ getByUserId(request.requestedToId).userModel.firstName }}
-                {{ getByUserId(request.requestedToId).userModel.lastName }}
+                {{ getById(request.requestedToId).userModel.firstName }}
+                {{ getById(request.requestedToId).userModel.lastName }}
+
               </li>
             </ul>
         </span>
@@ -47,25 +48,24 @@
         <span v-if="receivedFriendRequests.length > 0">
             <ul>
               <li v-for="request in receivedFriendRequests" :key="request.requestedById">
-                {{ getByUserId(request.requestedById).userModel.firstName }}
-                {{ getByUserId(request.requestedById).userModel.lastName }}
+                <FriendReceivedRequestItem :requestedToId="request.requestedToId" :requestedFromId="request.requestedById"></FriendReceivedRequestItem>
               </li>
             </ul>
         </span>
      </div>
-
-    <!-- {{single.profile.sentFriendRequests}}
-    {{single.profile.receivedFriendRequests}}
-    {{singleState.profile}} -->
-
    </div> 
   </router-view>
 </template>
 
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
+import FriendReceivedRequestItem from "@/components/FriendReceivedRequestItem.vue";
 
 export default {
+    name: "MyProfile",
+    components: {
+          FriendReceivedRequestItem,
+        },
   data() {
     return {
       loading: false,
@@ -88,23 +88,23 @@ export default {
       required: true,
     },
   },
-  mounted() {
-    this.profile = this.single;
-    //this.sentFriendRequests = profile.profile.sentFriendRequests
-  },
   computed: {
      ...mapState({
       single: (state) => state.profiles.single,
       profiles: (state) => state.profiles.all
     }),
-    ...mapGetters("profiles", ["getByUserId"]
+    ...mapGetters("profiles", ["getByUserId", "getById"]
     ),
     fullAddress: function(){
+      if(this.address == null ){
+        return
+      }
       return this.address.numberSupplement + ' ' + this.address.streetName + ' ' + this.address.town + ' ' + this.address.postCode
     }
   },
   watch: {
-    single: function(newSingle, oldSingle){
+    single: 
+      function(newSingle, oldSingle) {
         this.singleState = newSingle
         this.sentFriendRequests = this.singleState.profile.sentFriendRequests
         this.receivedFriendRequests = this.singleState.profile.receivedFriendRequests
@@ -116,20 +116,20 @@ export default {
         this.rating = this.singleState.profile.rating
         this.isClub = this.singleState.profile.isClub
         this.clubName = this.singleState.profile.club.name
+      },
     },
-
-  },
+  
   created() {
      this.getProfile();
      this.getAll();
   },
   methods: {
-    ...mapActions("profiles", ["getSingle", "getAll"],
+    ...mapActions("profiles", ["getSingleByUser", "getAll"],
     ),
     getProfile (){
       this.loading = true
 
-      this.getSingle(this.$route.params.userId).then(
+      this.getSingleByUser(this.$route.params.userId).then(
         this.loading = false
       )
     },

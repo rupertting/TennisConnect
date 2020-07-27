@@ -5,6 +5,7 @@ import { profiles } from "./profiles.module";
 import { users } from "./users.module";
 import { alert } from "./alert.module";
 import { account } from "./account.module";
+import { friends } from "./friends.module";
 
 Vue.use(Vuex);
 
@@ -14,5 +15,6 @@ export default new Vuex.Store({
     users,
     alert,
     account,
+    friends,
   },
 });

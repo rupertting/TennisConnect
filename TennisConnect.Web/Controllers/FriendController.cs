@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TennisConnect.Services.Services;
 
 namespace TennisConnect.Web.Controllers
 {
+    
     [ApiController]
     public class FriendController : ControllerBase
     {
@@ -43,6 +41,20 @@ namespace TennisConnect.Web.Controllers
             try
             {
                 _friendService.Accept(requestedById, requestedToId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("/api/rejectfriendrequest/requestedById={requestedById}&requestedToId={requestedToId}")]
+        public IActionResult RejectFriendRequest(int requestedById, int requestedToId)
+        {
+            try
+            {
+                _friendService.Reject(requestedById, requestedToId);
                 return Ok();
             }
             catch (Exception ex)

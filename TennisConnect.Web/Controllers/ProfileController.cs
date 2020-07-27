@@ -45,7 +45,7 @@ namespace TennisConnect.Web.Controllers
             }
         }
 
-        [HttpGet("/api/profile/{id}")]
+        [HttpGet("/api/profile/profileId={id}")]
         public ActionResult GetProfile(int id)
         {
             try

@@ -18,15 +18,28 @@ const actions = {
     );
   },
 
-  getSingle({ commit }: any, id: Number) {
-    commit("getSingleRequest");
+  getSingleByUser({ commit }: any, id: Number) {
+    commit("getSingleByUserRequest");
 
     profileService.getByUserId(id).then(
       (profile: IProfile) => {
-        commit("getSingleSuccess", profile);
+        commit("getSingleByUserSuccess", profile);
         console.log(profile);
       },
-      (error) => commit("getSingleFailure", error)
+      (error) => commit("getSingleByUserFailure", error)
+    );
+  },
+
+  getSingleByProfile({ commit }: any, id: Number) {
+    commit("getSingleByProfileRequest");
+    console.log("profiles module id:" + id);
+
+    profileService.getByProfileId(id).then(
+      (profile: IProfile) => {
+        commit("getSingleByProfileSuccess", profile);
+        console.log(profile);
+      },
+      (error) => commit("getSingleByProfileFailure", error)
     );
   },
 
@@ -45,19 +58,28 @@ const mutations = {
   getAllRequest(state: { all: { loading: boolean } }) {
     state.all = { loading: true };
   },
-  getSingleRequest(state: { current: { loading: boolean } }) {
+  getSingleByUserRequest(state: { current: { loading: boolean } }) {
+    state.current = { loading: true };
+  },
+  getSingleByProfileRequest(state: { current: { loading: boolean } }) {
     state.current = { loading: true };
   },
   getAllSuccess(state: { all: { items: any } }, profiles: any) {
     state.all = { items: profiles };
   },
-  getSingleSuccess(state: { single: { profile: any } }, profile: any) {
+  getSingleByUserSuccess(state: { single: { profile: any } }, profile: any) {
+    state.single = { profile };
+  },
+  getSingleByProfileSuccess(state: { single: { profile: any } }, profile: any) {
     state.single = { profile };
   },
   getAllFailure(state: { all: { error: any } }, error: any) {
     state.all = { error };
   },
-  getSingleFailure(state: { single: { error: any } }, error: any) {
+  getSingleByUserFailure(state: { single: { error: any } }, error: any) {
+    state.single = { error };
+  },
+  getSingleByProfileFailure(state: { single: { error: any } }, error: any) {
     state.single = { error };
   },
   deleteRequest(state: { all: { items: IProfile[] } }, id: number) {
