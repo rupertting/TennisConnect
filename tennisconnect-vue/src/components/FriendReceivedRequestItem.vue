@@ -20,8 +20,8 @@ export default {
   data() {
     return {
       singleState: {},
-      sentFriendRequests: [],
-      receivedFriendRequests: [],
+      sentFriendRequestsAwaiting: [],
+      receivedFriendRequestsAwaiting: [],
     };
   },
   props: {
@@ -36,8 +36,8 @@ export default {
   watch: {
     single: function(newSingle, oldSingle) {
       this.singleState = newSingle;
-      this.sentFriendRequests = this.singleState.profile.sentFriendRequests;
-      this.receivedFriendRequests = this.singleState.profile.receivedFriendRequests;
+      this.sentFriendRequestsAwaiting = this.singleState.profile.sentFriendRequestsAwaiting;
+      this.receivedFriendRequestsAwaiting = this.singleState.profile.receivedFriendRequestsAwaiting;
     },
   },
   computed: {

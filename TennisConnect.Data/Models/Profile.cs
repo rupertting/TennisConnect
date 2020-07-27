@@ -24,6 +24,10 @@ namespace TennisConnect.Data
         public virtual ICollection<Friend> SentFriendRequests { get; set; }
         public virtual ICollection<Friend> ReceivedFriendRequests { get; set; }
         [NotMapped]
+        public virtual ICollection<Friend> SentFriendRequestsAwaiting { get; set; }
+        [NotMapped]
+        public virtual ICollection<Friend> ReceivedFriendRequestsAwaiting { get; set; }
+        [NotMapped]
         public virtual ICollection<Friend> Friends
         {
             get

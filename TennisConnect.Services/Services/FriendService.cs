@@ -37,18 +37,23 @@ namespace TennisConnect.Services.Services
 
         public IEnumerable<Friend> GetAllReceivedRequests(int requestedToId)
         {
-            var result = GetAll().Where(friend => friend.RequestedToId == requestedToId
-                && friend.FriendRequestFlag == FriendRequestFlag.None);
+            return GetAll().Where(friend => friend.RequestedToId == requestedToId);
+        }
 
+        public IEnumerable<Friend> GetAllReceivedRequestsAwaiting(int requestedToId)
+        {
             return GetAll().Where(friend => friend.RequestedToId == requestedToId
                 && friend.FriendRequestFlag == FriendRequestFlag.None);
         }
 
         public IEnumerable<Friend> GetAllSentRequests(int requestedById)
         {
-            var result = GetAll().Where(friend => friend.RequestedById == requestedById
-                && friend.FriendRequestFlag == FriendRequestFlag.None);
+            var friends = GetAll().Where(friend => friend.RequestedById == requestedById);
+            return GetAll().Where(friend => friend.RequestedById == requestedById);
+        }
 
+        public IEnumerable<Friend> GetAllSentRequestsAwaiting(int requestedById)
+        {
             return GetAll().Where(friend => friend.RequestedById == requestedById
                 && friend.FriendRequestFlag == FriendRequestFlag.None);
         }

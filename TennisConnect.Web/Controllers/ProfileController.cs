@@ -54,6 +54,8 @@ namespace TennisConnect.Web.Controllers
                
                 profile.SentFriendRequests = _friendService.GetAllSentRequests(profile.Id).ToList();
                 profile.ReceivedFriendRequests = _friendService.GetAllReceivedRequests(profile.Id).ToList();
+                profile.SentFriendRequestsAwaiting = _friendService.GetAllSentRequestsAwaiting(profile.Id).ToList();
+                profile.ReceivedFriendRequestsAwaiting = _friendService.GetAllReceivedRequestsAwaiting(profile.Id).ToList();
 
                 var model = _mapper.Map<CompletedProfileModel>(profile);
                 return Ok(model);
@@ -73,6 +75,8 @@ namespace TennisConnect.Web.Controllers
 
                 profile.SentFriendRequests = _friendService.GetAllSentRequests(profile.Id).ToList();
                 profile.ReceivedFriendRequests = _friendService.GetAllReceivedRequests(profile.Id).ToList();
+                profile.SentFriendRequestsAwaiting = _friendService.GetAllSentRequestsAwaiting(profile.Id).ToList();
+                profile.ReceivedFriendRequestsAwaiting = _friendService.GetAllReceivedRequestsAwaiting(profile.Id).ToList();
 
                 var model = _mapper.Map<CompletedProfileModel>(profile);
                 return Ok(model);

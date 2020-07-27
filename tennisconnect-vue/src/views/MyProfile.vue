@@ -34,9 +34,9 @@
 
      <div class="friends-info">
        <h2>Friend requests sent</h2>
-        <span v-if="sentFriendRequests.length > 0">
+        <span v-if="sentFriendRequestsAwaiting.length > 0">
             <ul>
-              <li v-for="request in sentFriendRequests" :key="request.requestedToId">
+              <li v-for="request in sentFriendRequestsAwaiting" :key="request.requestedToId">
                 {{ getById(request.requestedToId).userModel.firstName }}
                 {{ getById(request.requestedToId).userModel.lastName }}
 
@@ -45,13 +45,23 @@
         </span>
 
         <h2>Friend requests received</h2>
-        <span v-if="receivedFriendRequests.length > 0">
+        <span v-if="receivedFriendRequestsAwaiting.length > 0">
             <ul>
-              <li v-for="request in receivedFriendRequests" :key="request.requestedById">
+              <li v-for="request in receivedFriendRequestsAwaiting" :key="request.requestedById">
                 <FriendReceivedRequestItem :requestedToId="request.requestedToId" :requestedFromId="request.requestedById"></FriendReceivedRequestItem>
               </li>
             </ul>
         </span>
+
+        <h2>Friends</h2>
+        <span v-if="friends.length > 0">
+          <ul>
+            <li v-for="friend in friends">
+                {{friend}}
+            </li>
+          </ul>
+        </span>
+
      </div>
    </div> 
   </router-view>
@@ -71,8 +81,9 @@ export default {
       loading: false,
       address: {},
       singleState: {},
-      sentFriendRequests: [],
-      receivedFriendRequests: [],
+      sentFriendRequestsAwaiting: [],
+      receivedFriendRequestsAwaiting: [],
+      friends: [],
       firstName: '',
       lastName: '',
       emailAddress: '',
@@ -106,8 +117,9 @@ export default {
     single: 
       function(newSingle, oldSingle) {
         this.singleState = newSingle
-        this.sentFriendRequests = this.singleState.profile.sentFriendRequests
-        this.receivedFriendRequests = this.singleState.profile.receivedFriendRequests
+        this.sentFriendRequestsAwaiting = this.singleState.profile.sentFriendRequestsAwaiting
+        this.receivedFriendRequestsAwaiting = this.singleState.profile.receivedFriendRequestsAwaiting
+        this.friends = this.singleState.profile.friends
         this.firstName = this.singleState.profile.userModel.firstName
         this.lastName = this.singleState.profile.userModel.lastName
         this.emailAddress = this.singleState.profile.userModel.emailAddress

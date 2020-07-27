@@ -13,8 +13,8 @@ namespace TennisConnect.Web.Models
         public Club Club { get; set; }
         public string Rating { get; set; }
         public string Bio { get; set; }
-        public virtual ICollection<FriendModel> SentFriendRequests { get; set; }
-        public virtual ICollection<FriendModel> ReceivedFriendRequests { get; set; }
+        public virtual ICollection<FriendModel> SentFriendRequestsAwaiting { get; set; }
+        public virtual ICollection<FriendModel> ReceivedFriendRequestsAwaiting { get; set; }
         public virtual ICollection<FriendModel> Friends { get; set; }
 
     }

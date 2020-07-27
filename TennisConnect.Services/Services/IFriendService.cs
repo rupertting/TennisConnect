@@ -12,5 +12,7 @@ namespace TennisConnect.Services.Services
         Friend GetById(int requestedById, int requestedToId);
         IEnumerable<Friend> GetAllReceivedRequests(int requestedToId);
         IEnumerable<Friend> GetAllSentRequests(int requestedById);
+        IEnumerable<Friend> GetAllReceivedRequestsAwaiting(int requestedToId);
+        IEnumerable<Friend> GetAllSentRequestsAwaiting (int requestedById);
     }
 }
