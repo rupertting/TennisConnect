@@ -56,8 +56,11 @@
         <h2>Friends</h2>
         <span v-if="friends.length > 0">
           <ul>
-            <li v-for="friend in friends">
-                {{friend}}
+            <li v-for="friend in friends" :key="friend.friendId">
+              <router-link :to="{ name: 'Profile', params: { id: friend.friendId } }">
+                {{ getById(friend.friendId).userModel.firstName }}
+                {{ getById(friend.friendId).userModel.lastName }}
+              </router-link>
             </li>
           </ul>
         </span>

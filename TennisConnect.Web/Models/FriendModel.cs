@@ -10,5 +10,6 @@ namespace TennisConnect.Web.Models
         public DateTime? RequestTime { get; set; }
         public DateTime? BecameFriendsTime { get; set; }
         public FriendRequestFlag FriendRequestFlag { get; set; }
+        public int? FriendId { get; set; }
     }
 }

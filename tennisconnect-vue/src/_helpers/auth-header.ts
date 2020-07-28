@@ -9,3 +9,13 @@ export function authHeader() {
     return {};
   }
 }
+
+export function getUserId() {
+  let user = JSON.parse(localStorage.getItem("user"));
+
+  if (user) {
+    return user.id;
+  } else {
+    return {};
+  }
+}

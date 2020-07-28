@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace TennisConnect.Data
 {
@@ -34,6 +35,19 @@ namespace TennisConnect.Data
             {
                 var friends = SentFriendRequests.Where(x => x.Approved).ToList();
                 friends.AddRange(ReceivedFriendRequests.Where(x => x.Approved));
+
+                foreach (var friend in friends)
+                {
+                    if(Id == friend.RequestedById)
+                    {
+                        friend.FriendId = friend.RequestedToId;
+                    }
+                    else
+                    {
+                        friend.FriendId = friend.RequestedById;
+                    }
+                }
+
                 return friends;
             }
         }

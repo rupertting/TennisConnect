@@ -16,6 +16,8 @@ namespace TennisConnect.Data
         public DateTime? BecameFriendsTime { get; set; }
         public FriendRequestFlag FriendRequestFlag { get; set; }
         [NotMapped]
+        public int? FriendId { get; set; }
+        [NotMapped]
         public bool Approved => FriendRequestFlag == FriendRequestFlag.Approved;
         public void AddFriendRequest(Profile byProfile, Profile forProfile)
         {

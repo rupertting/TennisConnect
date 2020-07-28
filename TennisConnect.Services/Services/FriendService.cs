@@ -90,6 +90,13 @@ namespace TennisConnect.Services.Services
                 FriendRequestFlag = FriendRequestFlag.None,
             };
 
+            var existingFriend = GetById(requestedTo.Id, requestedBy.Id);
+
+            if(existingFriend != null)
+            {
+                throw new Exception("Existing friend request");
+            }
+
             _context.Friends.Add(friend);
             _context.SaveChanges();
         }

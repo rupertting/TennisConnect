@@ -3,7 +3,10 @@
     <div id="app">
       <div id="nav">
         <router-link to="/">Home</router-link> |
-        <router-link to="/profiles">Profiles</router-link>
+        <router-link to="/profiles">Profiles</router-link> |
+        <router-link :to="{ name: 'MyProfile', params: { userId: userId } }"
+          >My Profile</router-link
+        >
       </div>
       <!-- <router-view /> -->
     </div>
@@ -24,9 +27,15 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import { getUserId } from "@/_helpers/auth-header";
 
 export default {
   name: "app",
+  data() {
+    return {
+      userId: "",
+    };
+  },
   computed: {
     ...mapState({
       alert: (state) => state.alert,
@@ -42,6 +51,9 @@ export default {
       // clear alert on location change
       this.clearAlert();
     },
+  },
+  created() {
+    this.userId = getUserId();
   },
 };
 </script>
