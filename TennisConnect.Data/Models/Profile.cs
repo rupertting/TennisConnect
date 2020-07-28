@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace TennisConnect.Data
 {

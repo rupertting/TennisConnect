@@ -19,3 +19,15 @@ export function getUserId() {
     return {};
   }
 }
+
+export function getToken() {
+  // return authorization header with jwt token
+  let user = JSON.parse(localStorage.getItem("user"));
+  console.log("User token:" + user.token);
+
+  if (user && user.token) {
+    return user.token;
+  } else {
+    return {};
+  }
+}

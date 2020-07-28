@@ -1,5 +1,6 @@
 import axios from "axios";
 import { authHeader } from "@/_helpers/auth-header";
+import { getToken } from "@/_helpers/auth-header";
 
 export default class FriendService {
   API_URL = process.env.VUE_APP_API_URL;
@@ -11,14 +12,17 @@ export default class FriendService {
       "requestedToId",
       requestedToId
     );
-    const requestOptions = {
-      method: "POST",
-      headers: authHeader(),
+
+    const headers = {
+      Authorization: "Bearer " + getToken(),
     };
+
+    const payload = {};
 
     let res = await axios.post(
       `${this.API_URL}/acceptfriendrequest/requestedById=${requestedById}&requestedToId=${requestedToId}`,
-      { requestOptions }
+      payload,
+      { headers }
     );
 
     console.log("friend service res: " + res.status);
@@ -26,14 +30,16 @@ export default class FriendService {
   }
 
   public async reject(requestedById: number, requestedToId: number) {
-    const requestOptions = {
-      method: "POST",
-      headers: authHeader(),
+    const headers = {
+      Authorization: "Bearer " + getToken(),
     };
+
+    const payload = {};
 
     let res = await axios.post(
       `${this.API_URL}/rejectfriendrequest/requestedById=${requestedById}&requestedToId=${requestedToId}`,
-      { requestOptions }
+      payload,
+      { headers }
     );
     return res.status;
   }

@@ -5,7 +5,7 @@ using TennisConnect.Services.Services;
 
 namespace TennisConnect.Web.Controllers
 {
-    
+    [Authorize]
     [ApiController]
     public class FriendController : ControllerBase
     {
