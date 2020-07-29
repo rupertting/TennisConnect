@@ -73,6 +73,7 @@
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
 import FriendReceivedRequestItem from "@/components/FriendReceivedRequestItem.vue";
+import { getUserId } from "@/_helpers/auth-header";
 
 export default {
     name: "MyProfile",
@@ -144,10 +145,22 @@ export default {
     getProfile (){
       this.loading = true
 
+      console.log("getProfile: " + this.$route.params.userId)
       this.getSingleByUser(this.$route.params.userId).then(
         this.loading = false
       )
     },
   },
+  beforeRouteEnter(to, from, next) {
+        next(vm => {
+          console.log("vm" + vm._props.userId)
+          console.log("getuserId" + getUserId())
+          console.log("params.userId" + to.params.userId)
+             if (getUserId() !== vm._props.userId) {
+            next('/unauthorized');
+          }
+        })
+       
+      }
 };
 </script>

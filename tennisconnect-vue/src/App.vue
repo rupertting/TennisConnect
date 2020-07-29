@@ -8,8 +8,8 @@
           >My Profile</router-link
         >
       </div>
-      <!-- <router-view /> -->
     </div>
+
     <div class="jumbotron">
       <div class="container">
         <div class="row">

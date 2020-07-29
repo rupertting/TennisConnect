@@ -5,6 +5,9 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Security.Claims;
 using TennisConnect.Data;
 using TennisConnect.Services.Services;
 using TennisConnect.Web.Models;
@@ -44,11 +47,13 @@ namespace TennisConnect.Web.Controllers
             }
         }
 
+        
         [HttpGet("/api/profile/profileId={id}")]
         public ActionResult GetProfile(int id)
         {
             try
             {
+                var userId = User.Identity.Name;
                 var profile = _profileService.GetById(id);
                
                 profile.SentFriendRequests = _friendService.GetAllSentRequests(profile.Id).ToList();
@@ -70,6 +75,13 @@ namespace TennisConnect.Web.Controllers
         {
             try
             {
+                var userClaimId = int.Parse(User.Identity.Name);
+
+                if(userClaimId != userId)
+                {
+                    return Unauthorized();
+                }
+
                 var profile = _profileService.GetByUserId(userId);
 
                 profile.SentFriendRequests = _friendService.GetAllSentRequests(profile.Id).ToList();

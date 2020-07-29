@@ -50,6 +50,14 @@ const routes: Array<RouteConfig> = [
       import(/* webpackChunkName: "MyProfile" */ "../views/MyProfile.vue"),
     props: true,
   },
+  {
+    path: "/unauthorized",
+    name: "Unauthorized",
+    component: () =>
+      import(
+        /* webpackChunkName: "Unauthorized" */ "../views/Unauthorized.vue"
+      ),
+  },
 
   // otherwise redirect to home
   {
@@ -73,7 +81,6 @@ router.beforeEach((to, from, next) => {
   if (authRequired && !loggedIn) {
     return next("Login");
   }
-
   next();
 });
 
