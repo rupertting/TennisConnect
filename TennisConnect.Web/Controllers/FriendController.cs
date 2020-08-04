@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TennisConnect.Services.Services;
+using TennisConnect.Web.Models;
 
 namespace TennisConnect.Web.Controllers
 {
@@ -11,11 +14,13 @@ namespace TennisConnect.Web.Controllers
     {
         private readonly IFriendService _friendService;
         private readonly IProfileService _profileService;
+        private readonly IMapper _mapper;
 
-        public FriendController(IFriendService friendService, IProfileService profileService)
+        public FriendController(IFriendService friendService, IProfileService profileService, IMapper mapper)
         {
             _friendService = friendService;
             _profileService = profileService;
+            _mapper = mapper;
         }
 
         [HttpPost("/api/friendrequest/requestedById={requestedById}&requestedToId={requestedToId}")]
@@ -56,6 +61,21 @@ namespace TennisConnect.Web.Controllers
             {
                 _friendService.Reject(requestedById, requestedToId);
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("/api/getfriends/profileId={profileId}")]
+        public IActionResult GetFriends(int profileId)
+        {
+            try
+            {
+                var friends = _friendService.GetAll(profileId);
+                var model = _mapper.Map<IList<FriendModel>>(friends);
+                return Ok(model);
             }
             catch (Exception ex)
             {

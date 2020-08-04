@@ -35,6 +35,25 @@ namespace TennisConnect.Services.Services
             return _context.Friends;
         }
 
+        public IEnumerable<Friend> GetAll(int profileId)
+        {
+            var friends = GetAll().Where(friend => (friend.RequestedById == profileId 
+            || friend.RequestedToId == profileId) && friend.Approved);
+
+            foreach (var friend in friends)
+            {
+                if (profileId == friend.RequestedById)
+                {
+                    friend.FriendId = friend.RequestedToId;
+                }
+                else
+                {
+                    friend.FriendId = friend.RequestedById;
+                }
+            }
+            return friends;
+        }
+
         public IEnumerable<Friend> GetAllReceivedRequests(int requestedToId)
         {
             return GetAll().Where(friend => friend.RequestedToId == requestedToId);

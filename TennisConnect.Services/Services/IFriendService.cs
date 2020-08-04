@@ -9,6 +9,7 @@ namespace TennisConnect.Services.Services
         Friend Accept(int requestedById, int requestedToId);
         Friend Reject(int requestedById, int requestedToId);
         IEnumerable<Friend> GetAll();
+        IEnumerable<Friend> GetAll(int profileId);
         Friend GetById(int requestedById, int requestedToId);
         IEnumerable<Friend> GetAllReceivedRequests(int requestedToId);
         IEnumerable<Friend> GetAllSentRequests(int requestedById);

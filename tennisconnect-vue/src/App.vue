@@ -54,6 +54,7 @@ export default {
   },
   created() {
     this.userId = getUserId();
+    console.log("userId: " + this.userId);
   },
 };
 </script>

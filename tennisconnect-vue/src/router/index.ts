@@ -51,6 +51,13 @@ const routes: Array<RouteConfig> = [
     props: true,
   },
   {
+    path: "/friend/:friendId",
+    name: "Friend",
+    component: () =>
+      import(/* webpackChunkName: "Friend" */ "../views/Friend.vue"),
+    props: true,
+  },
+  {
     path: "/unauthorized",
     name: "Unauthorized",
     component: () =>

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using TennisConnect.Services;
 using TennisConnect.Web.Models;
 using TennisConnect.Data;
-using System.Text.RegularExpressions;
+using TennisConnect.Services.Services;
 
 namespace TennisConnect.Web.Controllers
 {
@@ -21,17 +21,19 @@ namespace TennisConnect.Web.Controllers
     public class UsersController : ControllerBase
     {
         private IUserService _userService;
+        private IProfileService _profileService;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
 
         public UsersController(
             IUserService userService,
             IMapper mapper,
-            IOptions<AppSettings> appSettings)
+            IOptions<AppSettings> appSettings, IProfileService profileService)
         {
             _userService = userService;
             _mapper = mapper;
             _appSettings = appSettings.Value;
+            _profileService = profileService;
         }
 
         [AllowAnonymous]
@@ -57,6 +59,8 @@ namespace TennisConnect.Web.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
+            var profileId = _profileService.GetByUserId(user.Id).Id;
+
             // return basic user info and authentication token
             return Ok(new
             {
@@ -64,7 +68,8 @@ namespace TennisConnect.Web.Controllers
                 EmailAddress = user.EmailAddress,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Token = tokenString
+                Token = tokenString,
+                ProfileId = profileId
             });
         }
 

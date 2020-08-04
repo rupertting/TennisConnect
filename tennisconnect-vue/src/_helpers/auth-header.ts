@@ -20,6 +20,17 @@ export function getUserId() {
   }
 }
 
+export function getProfileId() {
+  let user = JSON.parse(localStorage.getItem("user"));
+
+  if (user) {
+    console.log("profileId: " + user.profileId);
+    return user.profileId;
+  } else {
+    return {};
+  }
+}
+
 export function getToken() {
   // return authorization header with jwt token
   let user = JSON.parse(localStorage.getItem("user"));
