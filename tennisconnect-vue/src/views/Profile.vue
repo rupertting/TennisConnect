@@ -20,7 +20,7 @@
         {{ town }}
       </p>
       <p v-if="!confirmIfFriend(this.$route.params.id)">
-        <button :disabled="isDisabled" v-on:click="connectFriend">
+        <button v-on:click="connectFriend">
           Connect
         </button>
       </p>
