@@ -1,49 +1,53 @@
 <template>
-  <div>
-    <link
-      href="//netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <h2>Login</h2>
-    <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label for="emailaddress">Email address</label>
-        <input
-          type="text"
-          v-model="emailaddress"
-          name="emailaddress"
-          class="form-control"
-          :class="{ 'is-invalid': submitted && !emailaddress }"
-        />
-        <div v-show="submitted && !emailaddress" class="invalid-feedback">
-          Email address is required
-        </div>
-      </div>
-      <div class="form-group">
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          v-model="password"
-          name="password"
-          class="form-control"
-          :class="{ 'is-invalid': submitted && !password }"
-        />
-        <div v-show="submitted && !password" class="invalid-feedback">
-          Password is required
-        </div>
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" :disabled="status.loggingIn">
-          Login
-        </button>
-        <img
-          v-show="status.loggingIn"
-          src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-        />
-        <router-link to="/register" class="btn btn-link">Register</router-link>
-      </div>
-    </form>
-  </div>
+  <v-app>
+    <v-card width="400" class="mx-auto mt-5">
+      <v-card-title>
+        <h1 class="display-1">Login</h1>
+      </v-card-title>
+      <v-card-text>
+        <ValidationObserver ref="observer" v-slot="{ validate, reset }">
+          <v-form @submit.prevent="handleSubmit" id="login-form">
+            <ValidationProvider
+              v-slot="{ errors }"
+              name="email"
+              rules="required|email"
+            >
+              <v-text-field
+                v-model="emailaddress"
+                :error-messages="errors"
+                label="Email Address"
+                name="emailaddress"
+                required
+                prepend-icon="mdi-account-circle"
+              />
+            </ValidationProvider>
+            <ValidationProvider
+              v-slot="{ errors }"
+              name="password"
+              rules="required"
+            >
+              <v-text-field
+                :type="showPassword ? 'text' : 'password'"
+                v-model="password"
+                :error-messages="errors"
+                label="Password"
+                name="password"
+                prepend-icon="mdi-lock"
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                @click:append="showPassword = !showPassword"
+              />
+            </ValidationProvider>
+          </v-form>
+        </ValidationObserver>
+      </v-card-text>
+      <v-divider></v-divider>
+      <v-card-actions>
+        <v-btn :to="{ name: 'Register' }" color="success">Register</v-btn>
+        <v-spacer></v-spacer>
+        <v-btn type="submit" color="info" form="login-form">Login</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-app>
 </template>
 
 <script>
@@ -55,6 +59,7 @@ export default {
       emailaddress: "",
       password: "",
       submitted: false,
+      showPassword: false,
     };
   },
   computed: {
@@ -67,7 +72,7 @@ export default {
   methods: {
     ...mapActions("account", ["login", "logout"]),
     handleSubmit(e) {
-      this.submitted = true;
+      this.$refs.observer.validate();
       const { emailaddress, password } = this;
       if (emailaddress && password) {
         this.login({ emailaddress, password });

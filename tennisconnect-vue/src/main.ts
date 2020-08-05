@@ -2,13 +2,20 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import { ValidationProvider, extend, ValidationObserver } from "vee-validate";
-import { required } from "vee-validate/dist/rules";
-import vuetify from './plugins/vuetify';
+import {
+  ValidationProvider,
+  extend,
+  ValidationObserver,
+  setInteractionMode,
+} from "vee-validate";
+import { required, email } from "vee-validate/dist/rules";
+import vuetify from "./plugins/vuetify";
+
+setInteractionMode("eager");
 
 extend("required", {
   ...required,
-  message: "This field is required",
+  message: "{_field_} cannot be empty",
 });
 
 extend("min", {
@@ -16,6 +23,11 @@ extend("min", {
     return value.length >= args.length;
   },
   params: ["length"],
+});
+
+extend("email", {
+  ...email,
+  message: "Email must be valid",
 });
 
 Vue.component("ValidationProvider", ValidationProvider);
@@ -26,5 +38,5 @@ new Vue({
   router,
   store,
   vuetify,
-  render: (h) => h(App)
+  render: (h) => h(App),
 }).$mount("#app");
