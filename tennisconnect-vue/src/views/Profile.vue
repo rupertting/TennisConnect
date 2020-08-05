@@ -20,7 +20,9 @@
         {{ town }}
       </p>
       <p v-if="!confirmIfFriend(this.$route.params.id)">
-        <button v-on:click="connectFriend">Connect</button>
+        <button :disabled="isDisabled" v-on:click="connectFriend">
+          Connect
+        </button>
       </p>
     </div>
   </section>
@@ -43,6 +45,7 @@ export default {
       friends: [],
       profileId: "",
       rating: "",
+      hasClicked: false,
     };
   },
   props: {
@@ -56,6 +59,9 @@ export default {
       single: (state) => state.profiles.single,
       all: (state) => state.friends.all,
     }),
+    isDisabled: function() {
+      return !this.hasClicked;
+    },
   },
   created() {
     this.getProfile(this.$route.params.id);

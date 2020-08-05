@@ -3,7 +3,7 @@
     {{ getById(requestedFromId).userModel.firstName }}
     {{ getById(requestedFromId).userModel.lastName }}
     <button v-on:click="acceptFriend">Accept</button>
-    <button v-on:click="reject">Reject</button>
+    <button v-on:click="rejectFriend">Reject</button>
   </div>
 </template>
 
@@ -56,6 +56,13 @@ export default {
         requestedToId: this.requestedToId,
       };
       this.accept(o);
+    },
+    rejectFriend() {
+      const o = {
+        requestedById: this.requestedFromId,
+        requestedToId: this.requestedToId,
+      };
+      this.reject(o);
     },
   },
   created() {
