@@ -1,6 +1,6 @@
 export function authHeader() {
   // return authorization header with jwt token
-  let user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
   console.log("User token:" + user.token);
 
   if (user && user.token) {
@@ -11,7 +11,7 @@ export function authHeader() {
 }
 
 export function getUserId() {
-  let user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
   if (user) {
     return user.id;
@@ -21,7 +21,7 @@ export function getUserId() {
 }
 
 export function getProfileId() {
-  let user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
   if (user) {
     console.log("profileId: " + user.profileId);
@@ -33,7 +33,7 @@ export function getProfileId() {
 
 export function getToken() {
   // return authorization header with jwt token
-  let user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
   console.log("User token:" + user.token);
 
   if (user && user.token) {

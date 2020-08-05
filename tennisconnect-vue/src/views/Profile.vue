@@ -74,7 +74,7 @@ export default {
     ...mapActions("profiles", { getProfileByUserId: "getSingleByUser" }),
     ...mapActions("friends", ["connect", "getFriends"]),
     connectFriend() {
-      let o = {
+      const o = {
         requestedById: getProfileId(),
         requestedToId: this.profileId,
       };

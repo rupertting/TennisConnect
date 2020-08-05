@@ -4,6 +4,7 @@ import router from "./router";
 import store from "./store";
 import { ValidationProvider, extend, ValidationObserver } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
+import vuetify from './plugins/vuetify';
 
 extend("required", {
   ...required,
@@ -24,5 +25,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  render: (h) => h(App),
+  vuetify,
+  render: (h) => h(App)
 }).$mount("#app");

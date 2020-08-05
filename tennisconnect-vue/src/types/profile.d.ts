@@ -4,7 +4,7 @@ import club from "./club";
 import friend from "./friend";
 
 export default interface IProfile {
-  id: Number;
+  id: number;
   userModel: user;
   dateOfBirth: Date;
   address: address;

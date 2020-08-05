@@ -11,18 +11,18 @@ export default class ProfileService {
       headers: authHeader(),
     };
 
-    let result = await axios.get(`${this.API_URL}/profiles/`, requestOptions);
+    const result = await axios.get(`${this.API_URL}/profiles/`, requestOptions);
     console.log(result.data);
     return result.data;
   }
 
-  public async getByUserId(userId: Number): Promise<IProfile> {
+  public async getByUserId(userId: number): Promise<IProfile> {
     const requestOptions = {
       method: "GET",
       headers: authHeader(),
     };
 
-    let result = await axios.get(
+    const result = await axios.get(
       `${this.API_URL}/profile/userId=${userId}`,
       requestOptions
     );
@@ -30,13 +30,13 @@ export default class ProfileService {
     return result.data;
   }
 
-  public async getByProfileId(profileId: Number): Promise<IProfile> {
+  public async getByProfileId(profileId: number): Promise<IProfile> {
     const requestOptions = {
       method: "GET",
       headers: authHeader(),
     };
 
-    let result = await axios.get(
+    const result = await axios.get(
       `${this.API_URL}/profile/profileId=${profileId}`,
       requestOptions
     );

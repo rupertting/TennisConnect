@@ -18,7 +18,7 @@ const actions = {
     );
   },
 
-  getSingleByUser({ commit }: any, id: Number) {
+  getSingleByUser({ commit }: any, id: number) {
     commit("getSingleByUserRequest");
 
     profileService.getByUserId(id).then(
@@ -30,7 +30,7 @@ const actions = {
     );
   },
 
-  getSingleByProfile({ commit }: any, id: Number) {
+  getSingleByProfile({ commit }: any, id: number) {
     commit("getSingleByProfileRequest");
     console.log("profiles module id:" + id);
 

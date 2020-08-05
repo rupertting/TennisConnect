@@ -20,7 +20,7 @@ export default class FriendService {
 
     const payload = {};
 
-    let res = await axios.post(
+    const res = await axios.post(
       `${this.API_URL}/acceptfriendrequest/requestedById=${requestedById}&requestedToId=${requestedToId}`,
       payload,
       { headers }
@@ -37,7 +37,7 @@ export default class FriendService {
 
     const payload = {};
 
-    let res = await axios.post(
+    const res = await axios.post(
       `${this.API_URL}/rejectfriendrequest/requestedById=${requestedById}&requestedToId=${requestedToId}`,
       payload,
       { headers }
@@ -59,7 +59,7 @@ export default class FriendService {
 
     const payload = {};
 
-    let res = await axios.post(
+    const res = await axios.post(
       `${this.API_URL}/friendrequest/requestedById=${requestedById}&requestedToId=${requestedToId}`,
       payload,
       { headers }
@@ -75,7 +75,7 @@ export default class FriendService {
       headers: authHeader(),
     };
 
-    let result = await axios.get(
+    const result = await axios.get(
       `${this.API_URL}/getfriends/profileId=${profileId}`,
       requestOptions
     );
@@ -84,7 +84,7 @@ export default class FriendService {
   }
 
   public async confirmIfFriends(profileId: number, friendId: number) {
-    var friends = this.getFriends(profileId);
+    const friends = this.getFriends(profileId);
 
     (await friends).forEach(function(friend) {
       if (friend.FriendId === friendId) {
