@@ -18,7 +18,7 @@ const actions = {
         // console.log(user);
         // console.log(user.id);
         //router.push({ name: "Profiles" });
-        router.push({ name: "MyProfile", params: { userId: user.id } });
+        evaluateRoute(user);
       },
       (error) => {
         commit("loginFailure", error);
@@ -49,6 +49,14 @@ const actions = {
     );
   },
 };
+
+function evaluateRoute(user: any) {
+  if (user.profileId == 0) {
+    router.push("/createprofile");
+  } else {
+    router.push({ name: "MyProfile", params: { userId: user.id } });
+  }
+}
 
 const mutations = {
   loginRequest(state, user) {

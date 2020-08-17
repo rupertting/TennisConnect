@@ -8,7 +8,7 @@ import {
   ValidationObserver,
   setInteractionMode,
 } from "vee-validate";
-import { required, email } from "vee-validate/dist/rules";
+import { required, email, max } from "vee-validate/dist/rules";
 import vuetify from "./plugins/vuetify";
 
 setInteractionMode("eager");
@@ -23,6 +23,11 @@ extend("min", {
     return value.length >= args.length;
   },
   params: ["length"],
+});
+
+extend("max", {
+  ...max,
+  message: "{_field_} may not be greater than {length} characters",
 });
 
 extend("email", {

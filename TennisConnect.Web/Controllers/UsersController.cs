@@ -59,7 +59,8 @@ namespace TennisConnect.Web.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
-            var profileId = _profileService.GetByUserId(user.Id).Id;
+            var profile = _profileService.GetByUserId(user.Id);
+            var profileId = profile == null ? 0 : profile.Id;
 
             // return basic user info and authentication token
             return Ok(new

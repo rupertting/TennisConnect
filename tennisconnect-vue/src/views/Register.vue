@@ -1,90 +1,88 @@
 <template>
-  <div>
-    <link
-      href="//netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <h2>Register</h2>
-    <ValidationObserver tag="form" ref="observer" v-slot="{ invalid }">
-      <form @submit.prevent="handleSubmit">
-        <div class="form-group">
-          <label for="firstName">First Name</label>
+  <v-card width="400" class="mx-auto mt-5">
+    <v-card-title>
+      <h1 class="display-1">Register</h1>
+    </v-card-title>
+    <v-card-text>
+      <ValidationObserver
+        tag="form"
+        ref="observer"
+        v-slot="{ validate, reset }"
+      >
+        <v-form @submit.prevent="handleSubmit" id="register-form">
           <validation-provider
-            name="First Name"
+            name="firstName"
             rules="required"
             v-slot="{ errors }"
           >
-            <input
+            <v-text-field
               type="text"
               v-model="user.firstName"
-              name="firstName"
-              class="form-control"
-              :class="{ 'is-invalid': submitted && errors.length > 0 }"
-            />
-            <span>{{ errors[0] }}</span>
+              :counter="10"
+              :error-messages="errors"
+              label="First name"
+              required
+            >
+            </v-text-field>
           </validation-provider>
-        </div>
-        <div class="form-group">
-          <label for="lastName">Last Name</label>
+
           <validation-provider
-            name="Last Name"
+            name="lastName"
             rules="required"
             v-slot="{ errors }"
           >
-            <input
+            <v-text-field
               type="text"
               v-model="user.lastName"
-              name="lastName"
-              class="form-control"
-              :class="{ 'is-invalid': submitted && errors.length > 0 }"
-            />
-            <span>{{ errors[0] }}</span>
+              :counter="10"
+              :error-messages="errors"
+              label="Last name"
+              required
+            >
+            </v-text-field>
           </validation-provider>
-        </div>
-        <div class="form-group">
-          <label for="emailaddress">Email Address</label>
+
           <validation-provider
-            name="Email"
-            rules="required"
+            name="email"
+            rules="required|email"
             v-slot="{ errors }"
           >
-            <input
+            <v-text-field
               type="text"
               v-model="user.emailaddress"
-              name="emailaddress"
-              class="form-control"
-              :class="{ 'is-invalid': submitted && errors.length > 0 }"
-            />
-            <span>{{ errors[0] }}</span>
+              :error-messages="errors"
+              label="Email"
+              required
+            >
+            </v-text-field>
           </validation-provider>
-        </div>
-        <div class="form-group">
-          <label htmlFor="password">Password</label>
+
           <validation-provider
-            name="Password"
+            name="password"
             rules="required|min:6"
             v-slot="{ errors }"
           >
-            <input
+            <v-text-field
               type="password"
               v-model="user.password"
-              name="password"
-              class="form-control"
-              :class="{ 'is-invalid': submitted && errors.length > 0 }"
-            />
-            <span>{{ errors[0] }}</span>
+              :error-messages="errors"
+              label="Password"
+              required
+            >
+            </v-text-field>
           </validation-provider>
-        </div>
-        <div class="form-group">
-          <button class="btn btn-primary" :disabled="status.registering">
-            Register
-          </button>
-
-          <router-link to="/login" class="btn btn-link">Cancel</router-link>
-        </div>
-      </form>
-    </ValidationObserver>
-  </div>
+        </v-form>
+      </ValidationObserver>
+    </v-card-text>
+    <v-divider></v-divider>
+    <v-card-actions>
+      <v-btn :to="{ name: 'Login' }" color="info">Login</v-btn>
+      <v-spacer />
+      <v-btn type="submit" form="register-form" color="success">Register</v-btn>
+      <v-spacer />
+      <v-btn @click="clear" color="error">clear</v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
@@ -96,7 +94,7 @@ export default {
       user: {
         firstName: "",
         lastName: "",
-        emailaddress: "",
+        email: "",
         password: "",
       },
       submitted: false,
@@ -114,6 +112,13 @@ export default {
         return;
       }
       this.register(this.user);
+    },
+    clear() {
+      this.user.firstName = "";
+      this.user.lastName = "";
+      this.user.email = "";
+      this.user.password = "";
+      this.$refs.observer.reset();
     },
   },
 };

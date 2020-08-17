@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app>
     <div id="app">
       <div id="nav">
         <router-link to="/">Home</router-link> |
@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>
