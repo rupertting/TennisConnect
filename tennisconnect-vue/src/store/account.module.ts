@@ -15,9 +15,6 @@ const actions = {
     userService.login(emailaddress, password).then(
       (user) => {
         commit("loginSuccess", user);
-        // console.log(user);
-        // console.log(user.id);
-        //router.push({ name: "Profiles" });
         evaluateRoute(user);
       },
       (error) => {
