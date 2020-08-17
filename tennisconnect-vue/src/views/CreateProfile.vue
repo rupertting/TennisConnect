@@ -1,5 +1,6 @@
 <template>
   <v-card width="400" class="mx-auto mt-5">
+    {{ clubs.items }}
     <v-card-title>
       <h1 class="display-1">Create profile</h1>
     </v-card-title>
@@ -33,7 +34,7 @@
         <ValidationProvider v-slot="{ errors }" name="select" rules="required">
           <v-select
             v-model="select"
-            :items="items"
+            :items="allClubs.items"
             :error-messages="errors"
             label="Select"
             data-vv-name="select"
@@ -73,8 +74,13 @@ export default {
     select: null,
     items: ["Item 1", "Item 2", "Item 3", "Item 4"],
     checkbox: null,
+    allClubs: {},
   }),
-
+  computed: {
+    ...mapState({
+      clubs: (state) => state.clubs.all,
+    }),
+  },
   methods: {
     submit() {
       this.$refs.observer.validate();
@@ -85,6 +91,15 @@ export default {
       this.select = null;
       this.checkbox = null;
       this.$refs.observer.reset();
+    },
+    ...mapActions("clubs", ["getAll"]),
+  },
+  created() {
+    this.getAll();
+  },
+  watch: {
+    clubs: function(newClubs, oldClubs) {
+      this.allClubs = newClubs;
     },
   },
 };
