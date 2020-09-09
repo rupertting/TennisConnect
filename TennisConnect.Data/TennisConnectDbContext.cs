@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using System;
 
 namespace TennisConnect.Data
 {
@@ -48,6 +49,12 @@ namespace TennisConnect.Data
 
             builder.HasPostgresEnum<Rating>();
             builder.HasPostgresEnum<FriendRequestFlag>();
+        }
+
+        [DbFunction("getaddressreferences", "public")]
+        public static bool GetAddressReferences(int addressId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

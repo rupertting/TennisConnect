@@ -9,7 +9,7 @@ namespace TennisConnect.Services.Services
     {
         IEnumerable<Address> GetAll();
         Address GetById(int id);
-        Address Update(int id);
+        Address Update(Address updatedAddress);
         void Delete(int id);
         Address Create(Address address);
         Address GetByUniqueIdentifier(string addressUniqueIdentifier);

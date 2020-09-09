@@ -93,7 +93,17 @@ namespace TennisConnect.Services.Services
 
             if(updatedProfile.Address != null)
             {
-                profile.Address = updatedProfile.Address;
+                var hasExistingReferences = GetAddressReferences(updatedProfile.Address.Id);
+
+                if (hasExistingReferences)
+                {
+                    var newAddress = _addressService.Create(updatedProfile.Address);
+                    profile.Address = newAddress;
+                }
+                else
+                {
+                    profile.Address = updatedProfile.Address;
+                }
             }
             
             if(updatedProfile.Rating != profile.Rating)
@@ -120,6 +130,15 @@ namespace TennisConnect.Services.Services
             _context.SaveChanges();
 
             return profile;
+        }
+
+        private bool GetAddressReferences(int addressId)
+        {
+            var query = _context.Addresses
+                .Where(x => x.Id == addressId)
+                .Select(d => TennisConnectDbContext.GetAddressReferences(addressId));
+
+            return query.FirstOrDefault();
         }
     }
 }

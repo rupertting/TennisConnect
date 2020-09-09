@@ -10,7 +10,6 @@ namespace TennisConnect.Web.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
     public class AddressController : ControllerBase
     {
         private readonly IAddressService _addressService;
@@ -36,6 +35,13 @@ namespace TennisConnect.Web.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
+        }
+
+        [HttpPost("/api/updateaddress/addressId={addressId}")]
+        public IActionResult Update(int addressId)
+        {
+            var result = _addressService.Update(addressId);
+            return Ok();
         }
     }
 }

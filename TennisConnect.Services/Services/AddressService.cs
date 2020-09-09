@@ -44,9 +44,9 @@ namespace TennisConnect.Services.Services
             return GetAll().FirstOrDefault(ad => ad.UniqueIdentifier == addressUniqueIdentifier);
         }
 
-        public Address Update(int id)
+        public Address Update(Address updatedAddress)
         {
-            throw new NotImplementedException();
+           throw new NotImplementedException();
         }
     }
 }
