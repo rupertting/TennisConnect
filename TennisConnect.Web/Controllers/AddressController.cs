@@ -40,7 +40,7 @@ namespace TennisConnect.Web.Controllers
         [HttpPost("/api/updateaddress/addressId={addressId}")]
         public IActionResult Update(int addressId)
         {
-            var result = _addressService.Update(addressId);
+            //var result = _addressService.Update(addressId);
             return Ok();
         }
     }
